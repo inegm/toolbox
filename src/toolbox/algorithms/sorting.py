@@ -76,3 +76,62 @@ def quicksort_lomuto(a, lo: int = 0, hi: Optional[int] = None) -> None:
     p = partition_lomuto(a, lo, hi)
     quicksort_lomuto(a, lo, p - 1)
     quicksort_lomuto(a, p + 1, hi)
+
+
+def partition_hoare(a, lo: int, hi: int) -> int:
+    """Hoare partitioning.
+
+    O(n^2) worst-case when A is already in sorted order.
+
+    ### Illustration ###
+
+        [5, 4, 3, 6, 2, 1, 9, 4, 0]
+        ---------------------------
+    1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 1, 2, 6, 3, 4, 9, 4, 5]
+    2 - [0, 1, 2]                   - [0, 1, 2, 6, 3, 4, 9, 4, 5]
+    3 - [6, 3, 4, 9, 4, 5]          - [0, 1, 2, 4, 3, 4, 9, 6, 5]
+    4 - [4, 3, 4]                   - [0, 1, 2, 3, 4, 4, 9, 6, 5]
+    5 - [9, 6, 5]                   - [0, 1, 2, 3, 4, 4, 5, 6, 9]
+        ---------------------------
+        [0, 1, 2, 3, 4, 4, 5, 6, 9]
+    """
+    print(a[lo : hi + 1])
+    pivot = a[(lo + hi) // 2]
+    i = lo - 1
+    j = hi + 1
+    while True:
+        while True:
+            i += 1
+            if a[i] >= pivot:
+                break
+        while True:
+            j -= 1
+            if a[j] <= pivot:
+                break
+        if i >= j:
+            print(a)
+            return j
+        swap(a, i, j)
+
+
+def quicksort_hoare(a, lo: int = 0, hi: Optional[int] = None) -> None:
+    """Hoare quicksort.
+
+    Sorts the array `a` from `lo` to `hi` in place using Hoare partitioning.
+
+    Comparison : True
+    Inplace : True
+    Stable : False
+    """
+    n = len(a)
+    if lo < 0:
+        raise ValueError("lo must be non-negative")
+    if hi is None:
+        hi = n - 1
+    elif hi >= n:
+        raise ValueError("hi must be within the index range")
+    if (hi - lo) < 2:
+        return
+    p = partition_hoare(a, lo, hi)
+    quicksort_hoare(a, lo, p)
+    quicksort_hoare(a, p + 1, hi)
