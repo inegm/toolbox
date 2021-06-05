@@ -4,7 +4,11 @@ from typing import Callable, List, Tuple
 
 from numpy import array, zeros
 from numpy.random import uniform
-from scipy.spatial.distance import euclidean
+
+
+def distance(a, b):
+    """Simple distance between two 1D arrays"""
+    return ((a - b) ** 2).sum() ** (0.5)
 
 
 @dataclass
@@ -35,8 +39,8 @@ class Particle:
             self.fitness_best = self.fitness
             self.position_best = self.position
 
-    def update(self, swarm_best_pos: array) -> None:
-        for ix, d in enumerate(self.position):
+    def update(self, swarm_best_pos: List[float]) -> None:
+        for ix, _d in enumerate(self.position):
             inertia = self.inertia * self.velocity[ix]
             cognitive_acc = self.cognitive * uniform(0, 1)
             cognitive_pos = cognitive_acc * (self.position_best[ix] - self.position[ix])
@@ -102,6 +106,7 @@ def pso(
     min_delta_repeats: int = 10,
     verbose: bool = True,
 ):
+    """Particle Swarm Optimization."""
     if n_particles < 2:
         raise ValueError("the swarm must count at least two particles")
     if max_steps < 1:
@@ -124,7 +129,7 @@ def pso(
     best_position = best_particle.position
     while step < max_steps:
         best_particle = update_swarm(swarm)
-        delta = euclidean(best_position, best_particle.position)
+        delta = distance(best_position, best_particle.position)
         best_position = best_particle.position
         if verbose:
             position_str = ", ".join([f"{d:.8f}" for d in best_position])
@@ -141,7 +146,7 @@ def pso(
 
 if __name__ == "__main__":
 
-    search_space = [(-10, 10), (-10, 10)]
+    search_space = [(-10.0, 10.0), (-10.0, 10.0)]
 
     def fitness(position: List[float]) -> float:
         x, y = position[0], position[1]
