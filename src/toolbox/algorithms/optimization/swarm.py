@@ -114,7 +114,7 @@ def pso(
 
     Subsequently at every step :
 
-    1. each particle measures it's fitness against the given fitness function
+    1. each particle measures its fitness against the given fitness function
     `fitness_func`.
     2. the best position, the one for which `fitness_func` yields the minimal
     value, is found and broadcast to the entire swarm. Note that this is an
