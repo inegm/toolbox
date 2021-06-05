@@ -106,7 +106,47 @@ def pso(
     min_delta_repeats: int = 10,
     verbose: bool = True,
 ):
-    """Particle Swarm Optimization."""
+    """Particle Swarm Optimization.
+
+    Starts by initializing a number `n_particles` of particles uniformally
+    randomly across the `search_space`. The `search_space` defines the range of
+    possible values to search for in each of the dimensions of the space.
+
+    Subsequently at every step :
+
+    1. each particle measures it's fitness against the given fitness function
+    `fitness_func`.
+    2. the best position, the one for which `fitness_func` yields the minimal
+    value, is found and broadcast to the entire swarm. Note that this is an
+    implementation of the **Global topology**, in which each particle is able
+    to communicate with all other particles of the swarm. There are other
+    topologies which may be less prone to particles getting stuck in local
+    minima.
+    3. given the swarm's best position, each particle moves towards it by a
+    degree dependent on the optimization parameters (described below), adjusted
+    by random factor.
+
+    The position update (step 3 above) is dependent on three parameters :
+
+    - `inertia`, in the range [0, 1] which determines the proportion by which
+    each step's velocity will affect the change in position. Low values will
+    slow the progress made at each step, and will potentially require more
+    steps, but it will encourage *exploitation*. Higher values encourage
+    *exploration*.
+    - `cognitive` constant, in the range ]0, 2[, represents an individual
+    particle's sense of certainty about its personal best position. A swarm with
+    a high cognitive constant will favour *exploitation*.
+    - `social` constant, in the range ]0, 2[, represents an individual
+    particle's sense of certainty about the swarm's best position. A swarm with
+    a high cognitive constant will favour *exploration*.
+
+    The three steps above are repeated until the stopping condition is met.
+    Here, the stopping condition is met if either :
+
+    - `max_steps` is reached, or
+    - there is a `min_delta` or smaller change in the swarm's best position over
+    `min_delta_repeats` steps.
+    """
     if n_particles < 2:
         raise ValueError("the swarm must count at least two particles")
     if max_steps < 1:
@@ -134,7 +174,7 @@ def pso(
         if verbose:
             position_str = ", ".join([f"{d:.8f}" for d in best_position])
             print(f"{step}\t[{position_str}]\t{delta:.8f}")
-        if delta < min_delta:
+        if delta <= min_delta:
             delta_count += 1
             if delta_count >= min_delta_repeats:
                 break
@@ -142,14 +182,3 @@ def pso(
             delta_count = 0
         step += 1
     return best_position
-
-
-if __name__ == "__main__":
-
-    search_space = [(-10.0, 10.0), (-10.0, 10.0)]
-
-    def fitness(position: List[float]) -> float:
-        x, y = position[0], position[1]
-        return (x + 2 * y - 7) ** 2 + (2 * x + y - 5) ** 2
-
-    print("result:", pso(fitness, 500, search_space, 0.1, 0.35, 0.45, 1000, 1e-7))
