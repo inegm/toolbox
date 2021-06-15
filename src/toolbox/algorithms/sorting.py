@@ -1,9 +1,3 @@
-"""
-Comparison : Can sort items of any type for which there is total ordering.
-Inplace : Does not need memory resources for a second array of equal size.
-Stable : Relative order of equal items is maintained.
-"""
-
 from typing import Optional
 
 
@@ -13,8 +7,13 @@ def swap(a, i: int, j: int) -> None:
     a[j] = swap_buf
 
 
-def partition_lomuto(a, lo: int, hi: int) -> int:
-    """Lomuto partitioning.
+def quicksort_lomuto(a, lo: int = 0, hi: Optional[int] = None) -> None:
+    """Sorts the array `a` from `lo` to `hi` in place using Lomuto partitioning.
+
+    Args:
+        a (array-like): The array
+        lo (int): The starting index of the section to be partitionned
+        hi (int): The ending index of the section to be partitionned
 
     This partitioning scheme always selects the last element in the array as a
     pivot. It then runs through the array with two cursors `i` and `j`. `i` is
@@ -24,16 +23,22 @@ def partition_lomuto(a, lo: int, hi: int) -> int:
     swapped with the value at index `i`. Once these operations have run their
     course, it is certain that all values to the left of the pivot (which is
     now at index `i`) are smaller than the pivot and that all values to the
-    left are larger than the pivot. The index `i` is returned to serve as the
+    left are larger than the pivot. The index `i` serves as the
     partitioning (split) point for the next iteration of the sorting
     algorithm, at which point the array is split into the left and right parts
-    of `a` and each part is sent back here until `a` containts two sorted
-    elements (and an `i` of `lo + 1` is returned).
+    of `a` and each part is partitionned again until the array is sorted.
 
-    O(n^2) worst-case when A is already in sorted order.
+    $O(n^{2})$ worst-case when A is already in sorted order.
 
-    ### Illustration ###
+    | | |
+    | --- | --- |
+    | **Comparison** | Yes |
+    | **Inplace** | Yes |
+    | **Stable** | No |
 
+    Examples:
+
+    ```
         [5, 4, 3, 6, 2, 1, 9, 4, 0]
         ---------------------------
     1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 4, 3, 6, 2, 1, 9, 4, 5]
@@ -44,25 +49,7 @@ def partition_lomuto(a, lo: int, hi: int) -> int:
     6 - [6, 9]                      - [0, 1, 2, 3, 4, 4, 5, 6, 9]
         ---------------------------
         [0, 1, 2, 3, 4, 4, 5, 6, 9]
-    """
-    pivot = a[hi]
-    i = lo
-    for j in range(lo, hi + 1):
-        if a[j] < pivot:
-            swap(a, i, j)
-            i += 1
-    swap(a, i, hi)
-    return i
-
-
-def quicksort_lomuto(a, lo: int = 0, hi: Optional[int] = None) -> None:
-    """Lomuto quicksort.
-
-    Sorts the array `a` from `lo` to `hi` in place using Lomuto partitioning.
-
-    Comparison : True
-    Inplace : True
-    Stable : False
+    ```
     """
     n = len(a)
     if lo < 0:
@@ -78,13 +65,46 @@ def quicksort_lomuto(a, lo: int = 0, hi: Optional[int] = None) -> None:
     quicksort_lomuto(a, p + 1, hi)
 
 
-def partition_hoare(a, lo: int, hi: int) -> int:
-    """Hoare partitioning.
+def partition_lomuto(a, lo: int, hi: int) -> int:
+    """Lomuto partitioning.
 
-    O(n^2) worst-case when A is already in sorted order.
+    Args:
+        a (array-like): The list which is being sorted
+        lo (int): The starting index of the section to be partitionned
+        hi (int): The ending index of the section to be partitionned
 
-    ### Illustration ###
+    Returns:
+        int: The partition index
+    """
+    pivot = a[hi]
+    i = lo
+    for j in range(lo, hi + 1):
+        if a[j] < pivot:
+            swap(a, i, j)
+            i += 1
+    swap(a, i, hi)
+    return i
 
+
+def quicksort_hoare(a, lo: int = 0, hi: Optional[int] = None) -> None:
+    """Sorts the array `a` from `lo` to `hi` in place using Hoare partitioning.
+
+    Args:
+        a (array-like): The array
+        lo (int): The starting index of the section to be partitionned
+        hi (int): The ending index of the section to be partitionned
+
+    $O(n^{2})$ worst-case when A is already in sorted order.
+
+    | | |
+    | --- | --- |
+    | **Comparison** | Yes |
+    | **Inplace** | Yes |
+    | **Stable** | No |
+
+    Examples:
+
+    ```
         [5, 4, 3, 6, 2, 1, 9, 4, 0]
         ---------------------------
     1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 1, 2, 6, 3, 4, 9, 4, 5]
@@ -94,8 +114,33 @@ def partition_hoare(a, lo: int, hi: int) -> int:
     5 - [9, 6, 5]                   - [0, 1, 2, 3, 4, 4, 5, 6, 9]
         ---------------------------
         [0, 1, 2, 3, 4, 4, 5, 6, 9]
+    ```
     """
-    print(a[lo : hi + 1])
+    n = len(a)
+    if lo < 0:
+        raise ValueError("lo must be non-negative")
+    if hi is None:
+        hi = n - 1
+    elif hi >= n:
+        raise ValueError("hi must be within the index range")
+    if (hi - lo) < 2:
+        return
+    p = partition_hoare(a, lo, hi)
+    quicksort_hoare(a, lo, p)
+    quicksort_hoare(a, p + 1, hi)
+
+
+def partition_hoare(a, lo: int, hi: int) -> int:
+    """Hoare partitioning.
+
+    Args:
+        a (array-like): The list which is being sorted
+        lo (int): The starting index of the section to be partitionned
+        hi (int): The ending index of the section to be partitionned
+
+    Returns:
+        int: The partition index
+    """
     pivot = a[(lo + hi) // 2]
     i = lo - 1
     j = hi + 1
@@ -112,26 +157,3 @@ def partition_hoare(a, lo: int, hi: int) -> int:
             print(a)
             return j
         swap(a, i, j)
-
-
-def quicksort_hoare(a, lo: int = 0, hi: Optional[int] = None) -> None:
-    """Hoare quicksort.
-
-    Sorts the array `a` from `lo` to `hi` in place using Hoare partitioning.
-
-    Comparison : True
-    Inplace : True
-    Stable : False
-    """
-    n = len(a)
-    if lo < 0:
-        raise ValueError("lo must be non-negative")
-    if hi is None:
-        hi = n - 1
-    elif hi >= n:
-        raise ValueError("hi must be within the index range")
-    if (hi - lo) < 2:
-        return
-    p = partition_hoare(a, lo, hi)
-    quicksort_hoare(a, lo, p)
-    quicksort_hoare(a, p + 1, hi)

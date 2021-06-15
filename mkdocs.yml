@@ -1,0 +1,48 @@
+---
+extra_css:
+  - stylesheets/extra.css
+extra_javascript:
+  - javascripts/config.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+nav:
+  - About: index.md
+  - Machine-learning: learning.md
+  - Optimization: optimization.md
+  - Sorting: sorting.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            docstring_style: 'google'
+          rendering:
+            show_signature_annotations: true
+            show_root_toc_entry: false
+repo_name: inegm/toolbox
+repo_url: https://github.com/inegm/toolbox
+site_name: Toolbox
+site_url: https://example.com/
+theme:
+  features:
+    - search.suggest
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: pink
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: pink
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
