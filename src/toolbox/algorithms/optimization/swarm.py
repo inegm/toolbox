@@ -13,6 +13,15 @@ def distance(a, b):
 
 @dataclass
 class Particle:
+    """
+    Args:
+        position (List[float]): The particle's current position within the
+            search space.
+        search_space (List[Tuple[float, float]]): see pso.
+        inertia (float): see pso.
+        cognitive (float): see pso.
+    """
+
     position: List[float]
     search_space: List[Tuple[float, float]] = field(repr=False)
     fitness_func: Callable = field(repr=False)
@@ -108,6 +117,31 @@ def pso(
 ):
     """Particle Swarm Optimization.
 
+    Args:
+        fitness_func: The function to minimize
+        n_particles: More particles will slow the performance but will increase
+            the likelihood of finding a global minimum
+        search_space: A range, for each dimension, within which to search
+        inertia: A constant in the range [0, 1] which determines the proportion
+            by which each step's velocity will affect the change in position.
+            Low values will slow the progress made at each step, and will
+            potentially require more steps, but it will encourage *exploitation*.
+            Higher values encourage *exploration*.
+        cognitive: A constant in the range ]0, 2[, represents an individual
+            particle's sense of certainty about its personal best position.
+            A swarm with a high cognitive constant will favour *exploitation*.
+        social: A constant in the range ]0, 2[, represents an individual
+            particle's sense of certainty about the swarm's best position.
+            A swarm with a high cognitive constant will favour *exploration*.
+        max_steps: A stopping condition.
+        min_delta: In combination with `min_delta_repeats` defines a stopping
+            condition based on the change in distance travelled across the search
+            space between steps.
+        min_delta_repeats: The number of times a value smaller than `min_delta`
+            is observed before the optimization is stopped.
+        verbose: Set to False to silence printing at each step.
+
+
     Starts by initializing a number `n_particles` of particles uniformally
     randomly across the `search_space`. The `search_space` defines the range of
     possible values to search for in each of the dimensions of the space.
@@ -126,19 +160,11 @@ def pso(
     degree dependent on the optimization parameters (described below), adjusted
     by random factor.
 
-    The position update (step 3 above) is dependent on three parameters :
+    The position update (step 3 above) is dependent on the three parameters :
 
-    - `inertia`, in the range [0, 1] which determines the proportion by which
-    each step's velocity will affect the change in position. Low values will
-    slow the progress made at each step, and will potentially require more
-    steps, but it will encourage *exploitation*. Higher values encourage
-    *exploration*.
-    - `cognitive` constant, in the range ]0, 2[, represents an individual
-    particle's sense of certainty about its personal best position. A swarm with
-    a high cognitive constant will favour *exploitation*.
-    - `social` constant, in the range ]0, 2[, represents an individual
-    particle's sense of certainty about the swarm's best position. A swarm with
-    a high cognitive constant will favour *exploration*.
+    - `inertia`
+    - `cognitive`
+    - `social`
 
     The three steps above are repeated until the stopping condition is met.
     Here, the stopping condition is met if either :
