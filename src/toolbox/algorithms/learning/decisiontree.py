@@ -1,8 +1,13 @@
+from __future__ import annotations
 from collections import Counter
-from math import inf, log2
-from typing import Any, Callable, List, Optional, Union
+from dataclasses import dataclass
+from math import log2
+from operator import ge
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 import pandas as pd
+
+from toolbox.algorithms.learning.evaluation import evaluate_classifier
 
 
 def gini_impurity(labels: Union[List[Any], pd.Series]) -> float:
@@ -24,7 +29,7 @@ def gini_impurity(labels: Union[List[Any], pd.Series]) -> float:
     for $\mathnormal{n}$ classes with $i \in \{1, 2, ..., n\}$
     """
     c, n = Counter(labels), len(labels)
-    return 1 - sum((count / n) ** 2 for _elem, count in c.items())
+    return 1 - sum((count / n) ** 2 for _elem, count in c.items())  # type: ignore
 
 
 def entropy(labels: Union[List[Any], pd.Series]) -> float:
@@ -49,77 +54,124 @@ def entropy(labels: Union[List[Any], pd.Series]) -> float:
     return -sum((count / n) * log2((count / n)) for _elem, count in c.items())
 
 
-def information_gain(
-    labels: pd.Series,
-    true_idx: pd.Series,
-    impurity_func: Optional[Callable] = None,
-) -> float:
-    """Gain in information resulting from a split of the parent node.
-
-    Args:
-        labels: The labels column of the parent node (or the dataset at the
-            root).
-        true_idx: A series of True, False values indicating the examples to be
-            split into the left and right (True and False) children.
-        impurity_func: The function used to calculate impurity. For example:
-            `gini_impurity` or `entropy`.
-    """
-
-    def _calc_impurity(
-        values: pd.Series,
-        n_total: int,
-        impurity_func: Callable,
-    ) -> float:
-        return len(values) / n_total * impurity_func(values)
-
-    n_total = len(labels)
-    true_impurity = _calc_impurity(labels[true_idx], n_total, impurity_func)
-    false_impurity = _calc_impurity(labels[~true_idx], n_total, impurity_func)
-    total_impurity = true_impurity + false_impurity
-    return impurity_func(labels) - total_impurity
+@dataclass
+class DTCQuery:
+    feature: str
+    value: Any
+    operator: Callable
 
 
-class DecisionTree:
-    class Node:
-        def __init__(
-            self,
-            index,
-            decision_func,
-            left_child,
-            right_child,
-        ):
-            pass
+@dataclass
+class DTCNode:
+    idx: Any
+    query: Optional[DTCQuery] = None
+    left: Optional[DTCNode] = None
+    right: Optional[DTCNode] = None
+    leaf: bool = False
+    label: Optional[Any] = None
 
+
+class DecisionTreeClassifier:
     def __init__(
         self,
         features: pd.DataFrame,
         labels: pd.Series,
+        impurity_func: Callable,
     ):
-        self._nodes = list()
+        self.features = features
+        self.labels = labels
+        self.impurity_func = impurity_func
+        self._tree = None
 
     @property
-    def nodes(self):
-        return self._nodes
+    def tree(self):
+        return self._tree
 
-    def fit(self):
-        pass
+    def information_gain(self, idx: Any, true_idx: Any) -> float:
+        """Gain in information resulting from a split of the parent node."""
 
-    def evaluate(self):
-        pass
+        def _calc_impurity(
+            values: pd.Series,
+            n_total: int,
+            impurity_func: Callable,
+        ) -> float:
+            return len(values) / n_total * impurity_func(values)
 
-    def predict(self):
-        pass
+        labels = self.labels.loc[idx]
+        n_total = len(labels)
+        true_impurity = _calc_impurity(labels[true_idx], n_total, self.impurity_func)
+        false_impurity = _calc_impurity(labels[~true_idx], n_total, self.impurity_func)
+        total_impurity = true_impurity + false_impurity
+        return self.impurity_func(labels) - total_impurity
 
+    def find_best_split(self, idx):
+        max_gain = 0
+        query = None
+        true_idx = None
+        false_idx = None
+        for feature in self.features.columns:
+            for value in self.features[feature].unique():
+                split_condition = self.features.loc[idx][feature].ge(value)
+                n_true = split_condition.value_counts().get(True, 0)
+                n_false = split_condition.value_counts().get(False, 0)
+                if (n_true == 0) or (n_false == 0):
+                    continue
+                gain = self.information_gain(idx=idx, true_idx=split_condition)
+                if gain >= max_gain:
+                    true_idx = self.features.loc[idx][split_condition].index
+                    false_idx = self.features.loc[idx][~split_condition].index
+                    max_gain = gain
+                    query = DTCQuery(feature, value, ge)
+        return (max_gain, query, true_idx, false_idx)
 
-if __name__ == "__main__":
-    dataset = pd.DataFrame(
-        {
-            "carat": [0.21, 0.39, 0.5, 0.76, 0.87, 0.98, 1.13, 1.34, 1.67, 1.81],
-            "price": [327, 897, 1122, 907, 2757, 2865, 3045, 3914, 4849, 5688],
-            "cut": [0, 1, 1, 0, 0, 0, 0, 1, 1, 1],
-        }
-    )
-    print(dataset)
-    true_idx = dataset["price"].apply(lambda p: p > 327 and p <= 2865)
-    print(dataset[true_idx])
-    # print(information_gain(dataset["cut"], true_idx, gini_impurity))
+    def fit(self, node=None):
+        if node is None:
+            node = DTCNode(self.features.index)
+            self._tree = self.fit(node)
+        gain, query, left_idx, right_idx = self.find_best_split(node.idx)
+        if gain == 0:
+            return DTCNode(
+                node.idx, leaf=True, label=self.labels.loc[node.idx].values[0]
+            )
+        node.query = query
+        node.left = self.fit(DTCNode(left_idx))
+        node.right = self.fit(DTCNode(right_idx))
+        return node
+
+    def evaluate(
+        self,
+        data: pd.DataFrame,
+        verbose=True,
+    ) -> Tuple[pd.Series, pd.DataFrame, pd.DataFrame]:
+        predict_col = str(self.labels.name)
+        actual_col = "_".join([predict_col, "actual"])
+
+        pred_df = self.predict(data.drop(predict_col, axis=1))
+        pred_df[actual_col] = data[predict_col]
+
+        model_eval, class_eval, confusion_matrix = evaluate_classifier(
+            pred_df=pred_df,
+            predict_col=predict_col,
+            actual_col=actual_col,
+        )
+        if verbose:
+            print("\nMODEL\n")
+            print(model_eval)
+            print("\nCLASSES\n")
+            print(class_eval)
+            print("\nCONFUSION MATRIX\n")
+            print(confusion_matrix, "\n")
+        return (model_eval, class_eval, confusion_matrix)
+
+    def predict(self, data: pd.DataFrame):
+        labels = list()
+        for _ix, row in data.iterrows():
+            node = self.tree
+            while not node.leaf:
+                if node.query.operator(row[node.query.feature], node.query.value):
+                    node = node.left
+                else:
+                    node = node.right
+            labels.append(node.label)
+        data[self.labels.name] = labels
+        return data
