@@ -1,0 +1,1460 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://example.com/optimization/particle-swarm/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.8">
+    
+    
+      
+        <title>Particle-swarm - Toolbox</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#particle-swarm-optimization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Toolbox" class="md-header__button md-logo" aria-label="Toolbox" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Toolbox
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Particle-swarm
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/inegm/toolbox/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    inegm/toolbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Toolbox" class="md-nav__button md-logo" aria-label="Toolbox" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    Toolbox
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/inegm/toolbox/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    inegm/toolbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Machine-learning
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Machine-learning" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Machine-learning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../machine-learning/decision-trees/" class="md-nav__link">
+        Decision-trees
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../machine-learning/evaluation/" class="md-nav__link">
+        Evaluation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Optimization
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Optimization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Optimization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Particle-swarm
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Particle-swarm
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.pso" class="md-nav__link">
+    pso()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.generate_swarm" class="md-nav__link">
+    generate_swarm()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.evaluate_swarm" class="md-nav__link">
+    evaluate_swarm()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.update_swarm" class="md-nav__link">
+    update_swarm()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.Particle" class="md-nav__link">
+    Particle
+  </a>
+  
+    <nav class="md-nav" aria-label="Particle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness" class="md-nav__link">
+    evaluate_fitness()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.Particle.update" class="md-nav__link">
+    update()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Sorting
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Sorting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Sorting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sorting/quicksort/" class="md-nav__link">
+        quicksort
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.pso" class="md-nav__link">
+    pso()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.generate_swarm" class="md-nav__link">
+    generate_swarm()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.evaluate_swarm" class="md-nav__link">
+    evaluate_swarm()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.update_swarm" class="md-nav__link">
+    update_swarm()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.Particle" class="md-nav__link">
+    Particle
+  </a>
+  
+    <nav class="md-nav" aria-label="Particle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness" class="md-nav__link">
+    evaluate_fitness()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.optimization.swarm.Particle.update" class="md-nav__link">
+    update()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/inegm/toolbox/edit/master/docs/optimization/particle-swarm.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="particle-swarm-optimization">Particle Swarm Optimization</h1>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="toolbox.algorithms.optimization.swarm.pso" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pso</span><span class="p">(</span><span class="n">fitness_func</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">,</span> <span class="n">search_space</span><span class="p">,</span> <span class="n">inertia</span><span class="p">,</span> <span class="n">cognitive</span><span class="p">,</span> <span class="n">social</span><span class="p">,</span> <span class="n">max_steps</span><span class="p">,</span> <span class="n">min_delta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_delta_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+      <p>This implementation of particle-swarm optimization starts by initializing a
+number of particles uniformally randomly across the search space. The
+search space  defines the range of possible values to search for in each of
+the dimensions of the space. See <a href="#toolbox.algorithms.optimization.swarm.generate_swarm">generate_swarm</a>.</p>
+<p>Subsequently, at each iteration :</p>
+<ol>
+<li>every particle measures its fitness against the given fitness function.
+See <a href="#toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness">Particle.evaluate_fitness</a>.</li>
+<li>the best position - the one for which the fitness function yields the minimal
+value - is found and broadcast to the entire swarm. Note that this is an
+implementation of the <strong>Global topology</strong>, in which each particle is able
+to communicate with all other particles of the swarm. There are other
+topologies which may be less prone to particles getting stuck in local
+minima. See <a href="#toolbox.algorithms.optimization.swarm.evaluate_swarm">evaluate_swarm</a>.</li>
+<li>given the swarm's best position, each particle moves towards it by a
+degree dependent on the optimization parameters (described below), adjusted
+by a random factor. See <a href="#toolbox.algorithms.optimization.swarm.update_swarm">update_swarm</a>.</li>
+</ol>
+<p>The position update (step 3 above) is dependent on the three parameters :</p>
+<ul>
+<li><code>inertia</code></li>
+<li><code>cognitive</code></li>
+<li><code>social</code></li>
+</ul>
+<p>The three steps above are repeated until the stopping condition is met.
+Here, the stopping condition is met if either :</p>
+<ul>
+<li><code>max_steps</code> is reached, or</li>
+<li>there is a <code>min_delta</code> or smaller change in the swarm's best position
+repeatedly for <code>min_delta_repeats</code> steps.</li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>fitness_func</code></td>
+        <td><code>Callable</code></td>
+        <td><p>The function to minimize</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>n_particles</code></td>
+        <td><code>int</code></td>
+        <td><p>More particles will slow the performance but will increase
+the likelihood of finding a global minimum</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>search_space</code></td>
+        <td><code>List[Tuple[float, float]]</code></td>
+        <td><p>A range, for each dimension, within which to search</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>inertia</code></td>
+        <td><code>float</code></td>
+        <td><p>A constant in the range <span class="arithmatex">\([0, 1]\)</span> which determines the proportion
+by which each step's velocity will affect the change in position.
+Low values will slow the progress made at each step, and will
+potentially require more steps, but it will encourage <em>exploitation</em>.
+Higher values encourage <em>exploration</em>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>cognitive</code></td>
+        <td><code>float</code></td>
+        <td><p>A constant in the range <span class="arithmatex">\(]0, 2[\)</span>, represents an individual
+particle's sense of certainty about its personal best position.
+A swarm with a high cognitive constant will favour <em>exploitation</em>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>social</code></td>
+        <td><code>float</code></td>
+        <td><p>A constant in the range <span class="arithmatex">\(]0, 2[\)</span>, represents an individual
+particle's sense of certainty about the swarm's best position.
+A swarm with a high cognitive constant will favour <em>exploration</em>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>max_steps</code></td>
+        <td><code>int</code></td>
+        <td><p>A stopping condition.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>min_delta</code></td>
+        <td><code>float</code></td>
+        <td><p>In combination with <code>min_delta_repeats</code> defines a stopping
+condition based on the change in distance travelled across the search
+space between steps.</p></td>
+        <td><code>0</code></td>
+      </tr>
+      <tr>
+        <td><code>min_delta_repeats</code></td>
+        <td><code>int</code></td>
+        <td><p>The number of times a value smaller than <code>min_delta</code>
+is observed before the optimization is stopped.</p></td>
+        <td><code>10</code></td>
+      </tr>
+      <tr>
+        <td><code>verbose</code></td>
+        <td><code>bool</code></td>
+        <td><p>Set to False to silence printing at each step.</p></td>
+        <td><code>True</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[float]</code></td>
+      <td><p>The final best position, and hopefully the global minimum.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">booth</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">7</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pso</span><span class="p">(</span>
+        <span class="n">fitness_func</span><span class="o">=</span><span class="n">booth</span><span class="p">,</span>
+        <span class="n">n_particles</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">search_space</span><span class="o">=</span><span class="p">[(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)],</span>
+        <span class="n">inertia</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">cognitive</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+        <span class="n">social</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+        <span class="n">max_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">min_delta</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
+        <span class="n">min_delta_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+</code></pre></div>
+    <pre><code>1       [0.90367590, 3.07077955]        0.20555572
+2       [0.90864515, 3.07453398]        0.00000000
+3       [0.91783424, 3.14256790]        0.09377374
+4       [1.01895113, 2.98260133]        0.17020089
+5       [1.00240149, 3.05197469]        0.05203608
+6       [0.98202492, 2.98871176]        0.06888439
+7       [0.99610861, 2.99957312]        0.01907586
+8       [0.99225189, 3.00850750]        0.01124424
+9       [0.99971696, 3.00322148]        0.00939563
+10      [1.00077373, 3.00156704]        0.00204074
+11      [1.00038588, 2.99972079]        0.00187193
+12      [1.00008264, 2.99990549]        0.00026376
+13      [0.99999774, 2.99996748]        0.00009338
+14      [1.00004893, 2.99993361]        0.00004135
+15      [1.00008673, 2.99996720]        0.00006891
+16      [1.00000604, 2.99997651]        0.00006335
+17      [1.00002732, 2.99998583]        0.00002063
+18      [1.00000184, 3.00000745]        0.00002983
+19      [0.99999714, 2.99999854]        0.00000854
+20      [0.99999807, 2.99999881]        0.00000145
+21      [1.00000006, 2.99999973]        0.00000165
+22      [1.00000015, 3.00000011]        0.00000038
+23      [0.99999995, 2.99999995]        0.00000016
+24      [1.00000003, 3.00000010]        0.00000016
+25      [1.00000002, 3.00000002]        0.00000008
+26      [1.00000003, 2.99999998]        0.00000003
+27      [1.00000000, 3.00000000]        0.00000002
+28      [1.00000000, 3.00000000]        0.00000000
+</code></pre>
+
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/optimization/swarm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pso</span><span class="p">(</span>
+    <span class="n">fitness_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">search_space</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+    <span class="n">inertia</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">cognitive</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">social</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">min_delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">min_delta_repeats</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This implementation of particle-swarm optimization starts by initializing a</span>
+<span class="sd">    number of particles uniformally randomly across the search space. The</span>
+<span class="sd">    search space  defines the range of possible values to search for in each of</span>
+<span class="sd">    the dimensions of the space. See [generate_swarm]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.generate_swarm].</span>
+
+<span class="sd">    Subsequently, at each iteration :</span>
+
+<span class="sd">    1. every particle measures its fitness against the given fitness function.</span>
+<span class="sd">    See [Particle.evaluate_fitness]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness].</span>
+<span class="sd">    2. the best position - the one for which the fitness function yields the minimal</span>
+<span class="sd">    value - is found and broadcast to the entire swarm. Note that this is an</span>
+<span class="sd">    implementation of the **Global topology**, in which each particle is able</span>
+<span class="sd">    to communicate with all other particles of the swarm. There are other</span>
+<span class="sd">    topologies which may be less prone to particles getting stuck in local</span>
+<span class="sd">    minima. See [evaluate_swarm]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.evaluate_swarm].</span>
+<span class="sd">    3. given the swarm&#39;s best position, each particle moves towards it by a</span>
+<span class="sd">    degree dependent on the optimization parameters (described below), adjusted</span>
+<span class="sd">    by a random factor. See [update_swarm]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.update_swarm].</span>
+
+<span class="sd">    The position update (step 3 above) is dependent on the three parameters :</span>
+
+<span class="sd">    - `inertia`</span>
+<span class="sd">    - `cognitive`</span>
+<span class="sd">    - `social`</span>
+
+<span class="sd">    The three steps above are repeated until the stopping condition is met.</span>
+<span class="sd">    Here, the stopping condition is met if either :</span>
+
+<span class="sd">    - `max_steps` is reached, or</span>
+<span class="sd">    - there is a `min_delta` or smaller change in the swarm&#39;s best position</span>
+<span class="sd">    repeatedly for `min_delta_repeats` steps.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fitness_func: The function to minimize</span>
+<span class="sd">        n_particles: More particles will slow the performance but will increase</span>
+<span class="sd">            the likelihood of finding a global minimum</span>
+<span class="sd">        search_space: A range, for each dimension, within which to search</span>
+<span class="sd">        inertia: A constant in the range $[0, 1]$ which determines the proportion</span>
+<span class="sd">            by which each step&#39;s velocity will affect the change in position.</span>
+<span class="sd">            Low values will slow the progress made at each step, and will</span>
+<span class="sd">            potentially require more steps, but it will encourage *exploitation*.</span>
+<span class="sd">            Higher values encourage *exploration*.</span>
+<span class="sd">        cognitive: A constant in the range $]0, 2[$, represents an individual</span>
+<span class="sd">            particle&#39;s sense of certainty about its personal best position.</span>
+<span class="sd">            A swarm with a high cognitive constant will favour *exploitation*.</span>
+<span class="sd">        social: A constant in the range $]0, 2[$, represents an individual</span>
+<span class="sd">            particle&#39;s sense of certainty about the swarm&#39;s best position.</span>
+<span class="sd">            A swarm with a high cognitive constant will favour *exploration*.</span>
+<span class="sd">        max_steps: A stopping condition.</span>
+<span class="sd">        min_delta: In combination with `min_delta_repeats` defines a stopping</span>
+<span class="sd">            condition based on the change in distance travelled across the search</span>
+<span class="sd">            space between steps.</span>
+<span class="sd">        min_delta_repeats: The number of times a value smaller than `min_delta`</span>
+<span class="sd">            is observed before the optimization is stopped.</span>
+<span class="sd">        verbose: Set to False to silence printing at each step.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The final best position, and hopefully the global minimum.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        &gt;&gt;&gt; def booth(x, y):</span>
+<span class="sd">                return (x + 2*y - 7)**2 + (2*x + y - 5)**2</span>
+<span class="sd">        &gt;&gt;&gt; x, y = pso(</span>
+<span class="sd">                fitness_func=booth,</span>
+<span class="sd">                n_particles=1000,</span>
+<span class="sd">                search_space=[(-10, 10), (-10, 10)],</span>
+<span class="sd">                inertia=0.2,</span>
+<span class="sd">                cognitive=0.4,</span>
+<span class="sd">                social=0.6,</span>
+<span class="sd">                max_steps=100,</span>
+<span class="sd">                min_delta=0.00001,</span>
+<span class="sd">                min_delta_repeats=10,</span>
+<span class="sd">                verbose=True</span>
+<span class="sd">            )</span>
+
+<span class="sd">            1       [0.90367590, 3.07077955]        0.20555572</span>
+<span class="sd">            2       [0.90864515, 3.07453398]        0.00000000</span>
+<span class="sd">            3       [0.91783424, 3.14256790]        0.09377374</span>
+<span class="sd">            4       [1.01895113, 2.98260133]        0.17020089</span>
+<span class="sd">            5       [1.00240149, 3.05197469]        0.05203608</span>
+<span class="sd">            6       [0.98202492, 2.98871176]        0.06888439</span>
+<span class="sd">            7       [0.99610861, 2.99957312]        0.01907586</span>
+<span class="sd">            8       [0.99225189, 3.00850750]        0.01124424</span>
+<span class="sd">            9       [0.99971696, 3.00322148]        0.00939563</span>
+<span class="sd">            10      [1.00077373, 3.00156704]        0.00204074</span>
+<span class="sd">            11      [1.00038588, 2.99972079]        0.00187193</span>
+<span class="sd">            12      [1.00008264, 2.99990549]        0.00026376</span>
+<span class="sd">            13      [0.99999774, 2.99996748]        0.00009338</span>
+<span class="sd">            14      [1.00004893, 2.99993361]        0.00004135</span>
+<span class="sd">            15      [1.00008673, 2.99996720]        0.00006891</span>
+<span class="sd">            16      [1.00000604, 2.99997651]        0.00006335</span>
+<span class="sd">            17      [1.00002732, 2.99998583]        0.00002063</span>
+<span class="sd">            18      [1.00000184, 3.00000745]        0.00002983</span>
+<span class="sd">            19      [0.99999714, 2.99999854]        0.00000854</span>
+<span class="sd">            20      [0.99999807, 2.99999881]        0.00000145</span>
+<span class="sd">            21      [1.00000006, 2.99999973]        0.00000165</span>
+<span class="sd">            22      [1.00000015, 3.00000011]        0.00000038</span>
+<span class="sd">            23      [0.99999995, 2.99999995]        0.00000016</span>
+<span class="sd">            24      [1.00000003, 3.00000010]        0.00000016</span>
+<span class="sd">            25      [1.00000002, 3.00000002]        0.00000008</span>
+<span class="sd">            26      [1.00000003, 2.99999998]        0.00000003</span>
+<span class="sd">            27      [1.00000000, 3.00000000]        0.00000002</span>
+<span class="sd">            28      [1.00000000, 3.00000000]        0.00000000</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n_particles</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the swarm must count at least two particles&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max_steps</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;there should be at least one step&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">min_delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;absolute delta should be non-negative (0 to reach max_steps)&quot;</span><span class="p">)</span>
+
+    <span class="n">swarm</span> <span class="o">=</span> <span class="n">generate_swarm</span><span class="p">(</span>
+        <span class="n">n_particles</span><span class="o">=</span><span class="n">n_particles</span><span class="p">,</span>
+        <span class="n">search_space</span><span class="o">=</span><span class="n">search_space</span><span class="p">,</span>
+        <span class="n">fitness_func</span><span class="o">=</span><span class="n">fitness_func</span><span class="p">,</span>
+        <span class="n">inertia</span><span class="o">=</span><span class="n">inertia</span><span class="p">,</span>
+        <span class="n">cognitive</span><span class="o">=</span><span class="n">cognitive</span><span class="p">,</span>
+        <span class="n">social</span><span class="o">=</span><span class="n">social</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">delta_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">best_particle</span> <span class="o">=</span> <span class="n">update_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">)</span>
+    <span class="n">best_position</span> <span class="o">=</span> <span class="n">best_particle</span><span class="o">.</span><span class="n">position</span>
+    <span class="k">while</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+        <span class="n">best_particle</span> <span class="o">=</span> <span class="n">update_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">best_position</span><span class="p">,</span> <span class="n">best_particle</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">best_position</span> <span class="o">=</span> <span class="n">best_particle</span><span class="o">.</span><span class="n">position</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">position_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">best_position</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="se">\t</span><span class="s2">[</span><span class="si">{</span><span class="n">position_str</span><span class="si">}</span><span class="s2">]</span><span class="se">\t</span><span class="si">{</span><span class="n">delta</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;=</span> <span class="n">min_delta</span><span class="p">:</span>
+            <span class="n">delta_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">delta_count</span> <span class="o">&gt;=</span> <span class="n">min_delta_repeats</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delta_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">step</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">best_position</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="toolbox.algorithms.optimization.swarm.generate_swarm" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">generate_swarm</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">search_space</span><span class="p">,</span> <span class="n">fitness_func</span><span class="p">,</span> <span class="n">inertia</span><span class="p">,</span> <span class="n">cognitive</span><span class="p">,</span> <span class="n">social</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+      <p>This is the initialization step of the PSO algorithm, it is called only once.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>n_particles</code></td>
+        <td><code>int</code></td>
+        <td><p>More particles will slow the performance but will increase
+the likelihood of finding a global minimum</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>search_space</code></td>
+        <td><code>List[Tuple[float, float]]</code></td>
+        <td><p>A range, for each dimension, within which to search</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>fitness_func</code></td>
+        <td><code>Callable</code></td>
+        <td><p>The function to minimize</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>inertia</code></td>
+        <td><code>float</code></td>
+        <td><p>A constant in the range [0, 1] which determines the proportion
+by which each step's velocity will affect the change in position.
+Low values will slow the progress made at each step, and will
+potentially require more steps, but it will encourage <em>exploitation</em>.
+Higher values encourage <em>exploration</em>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>cognitive</code></td>
+        <td><code>float</code></td>
+        <td><p>A constant in the range ]0, 2[, represents an individual
+particle's sense of certainty about its personal best position.
+A swarm with a high cognitive constant will favour <em>exploitation</em>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>social</code></td>
+        <td><code>float</code></td>
+        <td><p>A constant in the range ]0, 2[, represents an individual
+particle's sense of certainty about the swarm's best position.
+A swarm with a high cognitive constant will favour <em>exploration</em>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[toolbox.algorithms.optimization.swarm.Particle]</code></td>
+      <td><p>A list of <a href="#toolbox.algorithms.optimization.swarm.Particle">Particles</a></p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/optimization/swarm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">generate_swarm</span><span class="p">(</span>
+    <span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">search_space</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+    <span class="n">fitness_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">inertia</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">cognitive</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">social</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Particle</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the initialization step of the PSO algorithm, it is called only once.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_particles: More particles will slow the performance but will increase</span>
+<span class="sd">            the likelihood of finding a global minimum</span>
+<span class="sd">        search_space: A range, for each dimension, within which to search</span>
+<span class="sd">        fitness_func: The function to minimize</span>
+<span class="sd">        inertia: A constant in the range [0, 1] which determines the proportion</span>
+<span class="sd">            by which each step&#39;s velocity will affect the change in position.</span>
+<span class="sd">            Low values will slow the progress made at each step, and will</span>
+<span class="sd">            potentially require more steps, but it will encourage *exploitation*.</span>
+<span class="sd">            Higher values encourage *exploration*.</span>
+<span class="sd">        cognitive: A constant in the range ]0, 2[, represents an individual</span>
+<span class="sd">            particle&#39;s sense of certainty about its personal best position.</span>
+<span class="sd">            A swarm with a high cognitive constant will favour *exploitation*.</span>
+<span class="sd">        social: A constant in the range ]0, 2[, represents an individual</span>
+<span class="sd">            particle&#39;s sense of certainty about the swarm&#39;s best position.</span>
+<span class="sd">            A swarm with a high cognitive constant will favour *exploration*.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of [Particles][toolbox.algorithms.optimization.swarm.Particle]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">uniform</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">)</span> <span class="k">for</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="ow">in</span> <span class="n">search_space</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">particles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
+        <span class="n">particles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">Particle</span><span class="p">(</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="p">,</span>
+                <span class="n">search_space</span><span class="o">=</span><span class="n">search_space</span><span class="p">,</span>
+                <span class="n">fitness_func</span><span class="o">=</span><span class="n">fitness_func</span><span class="p">,</span>
+                <span class="n">inertia</span><span class="o">=</span><span class="n">inertia</span><span class="p">,</span>
+                <span class="n">cognitive</span><span class="o">=</span><span class="n">cognitive</span><span class="p">,</span>
+                <span class="n">social</span><span class="o">=</span><span class="n">social</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">particles</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="toolbox.algorithms.optimization.swarm.evaluate_swarm" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">evaluate_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+      <p>At each iteration (step) of the PSO algorithm, the particles evaluate their
+fitness values by calling their <a href="#toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness">Particle.evaluate_fitness</a> methods.
+The particle with the best fitness determines the swarm's best position for
+that iteration.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Particle</code></td>
+      <td><p>The particle with the best position.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/optimization/swarm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Particle</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Particle</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    At each iteration (step) of the PSO algorithm, the particles evaluate their</span>
+<span class="sd">    fitness values by calling their [Particle.evaluate_fitness]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness] methods.</span>
+<span class="sd">    The particle with the best fitness determines the swarm&#39;s best position for</span>
+<span class="sd">    that iteration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        A list of [Particles][toolbox.algorithms.optimization.swarm.Particle]</span>
+<span class="sd">        belonging to the swarm.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The particle with the best position.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">best_particle</span> <span class="o">=</span> <span class="n">swarm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">best_fitness</span> <span class="o">=</span> <span class="n">best_particle</span><span class="o">.</span><span class="n">fitness</span>
+    <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">swarm</span><span class="p">:</span>
+        <span class="n">particle</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">particle</span><span class="o">.</span><span class="n">fitness</span> <span class="o">&lt;</span> <span class="n">best_fitness</span><span class="p">:</span>
+            <span class="n">best_fitness</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">fitness</span>
+            <span class="n">best_particle</span> <span class="o">=</span> <span class="n">particle</span>
+    <span class="k">return</span> <span class="n">best_particle</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="toolbox.algorithms.optimization.swarm.update_swarm" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">update_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+      <p>At each iteration (step) of the PSO algorithm, after discovering the swarm's
+best position with <a href="#toolbox.algorithms.optimization.swarm.evaluate_swarm">evaluate_swarm</a>, the particles update
+their positions by calling their <a href="#toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness">Particle.update</a> methods.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Particle</code></td>
+      <td><p>The particle with the best position.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/optimization/swarm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">update_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Particle</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Particle</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    At each iteration (step) of the PSO algorithm, after discovering the swarm&#39;s</span>
+<span class="sd">    best position with [evaluate_swarm]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.evaluate_swarm], the particles update</span>
+<span class="sd">    their positions by calling their [Particle.update]</span>
+<span class="sd">    [toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness] methods.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        A list of [Particles][toolbox.algorithms.optimization.swarm.Particle]</span>
+<span class="sd">        belonging to the swarm.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The particle with the best position.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">best_particle</span> <span class="o">=</span> <span class="n">evaluate_swarm</span><span class="p">(</span><span class="n">swarm</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">swarm</span><span class="p">:</span>
+        <span class="n">particle</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">best_particle</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">best_particle</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="toolbox.algorithms.optimization.swarm.Particle" class="doc doc-heading">
+        <code>Particle</code>
+
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>position</code></td>
+        <td><code>List[float]</code></td>
+        <td><p>The particle's current position within the
+search space.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>search_space</code></td>
+        <td><code>List[Tuple[float, float]]</code></td>
+        <td><p>see pso.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>inertia</code></td>
+        <td><code>float</code></td>
+        <td><p>see pso.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>cognitive</code></td>
+        <td><code>float</code></td>
+        <td><p>see pso.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="toolbox.algorithms.optimization.swarm.Particle.evaluate_fitness" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Particles evaluate their fitness simply by applying the fitness
+function to their current position. They keep track of their historical
+best position, which has an effect on their update velocity.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/optimization/swarm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Particles evaluate their fitness simply by applying the fitness</span>
+<span class="sd">    function to their current position. They keep track of their historical</span>
+<span class="sd">    best position, which has an effect on their update velocity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_best</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position_best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="toolbox.algorithms.optimization.swarm.Particle.update" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">swarm_best_pos</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This is the core of the PSO algorithm. At each iteration (step), every
+particle updates its position in the search space according to the
+swarm's current best position, that is the position of the particle with
+the best fitness. The extent to which each particle moves towards the
+best position, its update velocity, is determined by three key constants,
+the definitions of which are worth repeating here :</p>
+<ul>
+<li><strong>inertia</strong> : A constant in the range <span class="arithmatex">\([0, 1]\)</span> which determines the
+    proportion by which each step's velocity will affect the change in
+    position. Low values will slow the progress made at each step, and will
+    potentially require more steps, but it will encourage <em>exploitation</em>.
+    Higher values encourage <em>exploration</em>.</li>
+<li><strong>cognitive</strong> : A constant in the range <span class="arithmatex">\(]0, 2[\)</span>, represents an individual
+    particle's sense of certainty about its personal best position.
+    A swarm with a high cognitive constant will favour <em>exploitation</em>.</li>
+<li><strong>social</strong> : A constant in the range <span class="arithmatex">\(]0, 2[\)</span>, represents an individual
+    particle's sense of certainty about the swarm's best position.
+    A swarm with a high cognitive constant will favour <em>exploration</em>.</li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>swarm_best_pos</code></td>
+        <td><code>List[float]</code></td>
+        <td><p>The current position of the Particle with the best
+fitness.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/optimization/swarm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">swarm_best_pos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the core of the PSO algorithm. At each iteration (step), every</span>
+<span class="sd">    particle updates its position in the search space according to the</span>
+<span class="sd">    swarm&#39;s current best position, that is the position of the particle with</span>
+<span class="sd">    the best fitness. The extent to which each particle moves towards the</span>
+<span class="sd">    best position, its update velocity, is determined by three key constants,</span>
+<span class="sd">    the definitions of which are worth repeating here :</span>
+
+<span class="sd">    - **inertia** : A constant in the range $[0, 1]$ which determines the</span>
+<span class="sd">        proportion by which each step&#39;s velocity will affect the change in</span>
+<span class="sd">        position. Low values will slow the progress made at each step, and will</span>
+<span class="sd">        potentially require more steps, but it will encourage *exploitation*.</span>
+<span class="sd">        Higher values encourage *exploration*.</span>
+<span class="sd">    - **cognitive** : A constant in the range $]0, 2[$, represents an individual</span>
+<span class="sd">        particle&#39;s sense of certainty about its personal best position.</span>
+<span class="sd">        A swarm with a high cognitive constant will favour *exploitation*.</span>
+<span class="sd">    - **social** : A constant in the range $]0, 2[$, represents an individual</span>
+<span class="sd">        particle&#39;s sense of certainty about the swarm&#39;s best position.</span>
+<span class="sd">        A swarm with a high cognitive constant will favour *exploration*.</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        swarm_best_pos: The current position of the Particle with the best</span>
+<span class="sd">            fitness.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">_d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">):</span>
+        <span class="n">inertia</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inertia</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+        <span class="n">cognitive_acc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cognitive</span> <span class="o">*</span> <span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cognitive_pos</span> <span class="o">=</span> <span class="n">cognitive_acc</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_best</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span>
+        <span class="n">social_acc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">social</span> <span class="o">*</span> <span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">social_pos</span> <span class="o">=</span> <span class="n">social_acc</span> <span class="o">*</span> <span class="p">(</span><span class="n">swarm_best_pos</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">inertia</span> <span class="o">+</span> <span class="n">cognitive_pos</span> <span class="o">+</span> <span class="n">social_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../machine-learning/evaluation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Evaluation" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Evaluation
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../sorting/quicksort/" class="md-footer__link md-footer__link--next" aria-label="Next: quicksort" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              quicksort
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "navigation.instant", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.76f349be.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
