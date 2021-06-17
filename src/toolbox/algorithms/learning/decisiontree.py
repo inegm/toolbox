@@ -85,10 +85,19 @@ class DecisionTreeClassifier:
 
     @property
     def tree(self):
+        """The decision-tree's root node."""
         return self._tree
 
     def information_gain(self, idx: Any, true_idx: Any) -> float:
-        """Gain in information resulting from a split of the parent node."""
+        """Gain in information resulting from a split of the parent node.
+
+        Args:
+            idx (pd.array): The (pandas array) index of the examples of the node
+                before the split.
+            true_idx (pd.array): The (pandas array) index of the node's examples
+                for which the query condition is true. ie.: The left child after
+                the split.
+        """
 
         def _calc_impurity(
             values: pd.Series,
@@ -104,7 +113,13 @@ class DecisionTreeClassifier:
         total_impurity = true_impurity + false_impurity
         return self.impurity_func(labels) - total_impurity
 
-    def find_best_split(self, idx):
+    def find_best_split(self, idx: Any):
+        """Find the split which yields the highest information gain.
+
+        Args:
+            idx (pd.array): The (pandas array) index of the examples of the node
+                before the split.
+        """
         max_gain = 0
         query = None
         true_idx = None
@@ -124,25 +139,37 @@ class DecisionTreeClassifier:
                     query = DTCQuery(feature, value, ge)
         return (max_gain, query, true_idx, false_idx)
 
-    def fit(self, node=None):
-        if node is None:
-            node = DTCNode(self.features.index)
-            self._tree = self.fit(node)
-        gain, query, left_idx, right_idx = self.find_best_split(node.idx)
-        if gain == 0:
-            return DTCNode(
-                node.idx, leaf=True, label=self.labels.loc[node.idx].values[0]
-            )
-        node.query = query
-        node.left = self.fit(DTCNode(left_idx))
-        node.right = self.fit(DTCNode(right_idx))
-        return node
+    def fit(self):
+        """Build the decision tree."""
+
+        def _fit(node):
+            gain, query, left_idx, right_idx = self.find_best_split(node.idx)
+            if gain == 0:
+                return DTCNode(
+                    node.idx, leaf=True, label=self.labels.loc[node.idx].values[0]
+                )
+            node.query = query
+            node.left = _fit(DTCNode(left_idx))
+            node.right = _fit(DTCNode(right_idx))
+            return node
+
+        self._tree = _fit(DTCNode(self.features.index))
 
     def evaluate(
         self,
         data: pd.DataFrame,
         verbose=True,
     ) -> Tuple[pd.Series, pd.DataFrame, pd.DataFrame]:
+        """Evaluate the decision-tree model.
+
+        See
+        [evaluation.evaluate_classifier()]
+        [toolbox.algorithms.learning.evaluation.evaluate_classifier].
+
+        Args:
+            data: A labeled DataFrame. The label column is expected to be named
+                the same as the labels Series that was provided at initialization.
+        """
         predict_col = str(self.labels.name)
         actual_col = "_".join([predict_col, "actual"])
 
@@ -150,20 +177,19 @@ class DecisionTreeClassifier:
         pred_df[actual_col] = data[predict_col]
 
         model_eval, class_eval, confusion_matrix = evaluate_classifier(
-            pred_df=pred_df,
+            predict_df=pred_df,
             predict_col=predict_col,
             actual_col=actual_col,
+            verbose=verbose,
         )
-        if verbose:
-            print("\nMODEL\n")
-            print(model_eval)
-            print("\nCLASSES\n")
-            print(class_eval)
-            print("\nCONFUSION MATRIX\n")
-            print(confusion_matrix, "\n")
         return (model_eval, class_eval, confusion_matrix)
 
     def predict(self, data: pd.DataFrame):
+        """Predict classes for a set of unlabeled examples.
+
+        Args:
+            data: Unlabeled DataFrame of examples.
+        """
         labels = list()
         for _ix, row in data.iterrows():
             node = self.tree

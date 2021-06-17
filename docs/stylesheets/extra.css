@@ -1,1 +1,19 @@
-.md-nav__item .md-nav__link--active {color: #f50056}
+.md-main {
+  background-color: #e8e8e8;
+}
+.md-nav__item .md-nav__link--active {
+  color: black;
+  font-weight: bold;
+}
+
+.doc-object {
+  padding-bottom: 1em;
+}
+
+.doc-object > .doc-heading {
+  padding-bottom: 0.5em;
+}
+
+.doc-object > .doc-heading > .highlight > .n:first-child {
+  font-weight: bold;
+}
