@@ -2,7 +2,7 @@
 repo_name: inegm/toolbox
 repo_url: https://github.com/inegm/toolbox
 site_name: Toolbox
-site_url: https://example.com/
+site_url: https://inegm.github.io/toolbox
 nav:
   - About: index.md
   - Machine-learning:
