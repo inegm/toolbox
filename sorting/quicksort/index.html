@@ -1,0 +1,1111 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://example.com/sorting/quicksort/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.8">
+    
+    
+      
+        <title>quicksort - Toolbox</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quicksort" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Toolbox" class="md-header__button md-logo" aria-label="Toolbox" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Toolbox
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              quicksort
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/inegm/toolbox/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    inegm/toolbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Toolbox" class="md-nav__button md-logo" aria-label="Toolbox" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    Toolbox
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/inegm/toolbox/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    inegm/toolbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Machine-learning
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Machine-learning" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Machine-learning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../machine-learning/decision-trees/" class="md-nav__link">
+        Decision-trees
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../machine-learning/evaluation/" class="md-nav__link">
+        Evaluation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Optimization
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Optimization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Optimization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/particle-swarm/" class="md-nav__link">
+        Particle-swarm
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Sorting
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Sorting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Sorting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          quicksort
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        quicksort
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lomuto" class="md-nav__link">
+    Lomuto
+  </a>
+  
+    <nav class="md-nav" aria-label="Lomuto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.quicksort_lomuto" class="md-nav__link">
+    quicksort_lomuto()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.partition_lomuto" class="md-nav__link">
+    partition_lomuto()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hoare" class="md-nav__link">
+    Hoare
+  </a>
+  
+    <nav class="md-nav" aria-label="Hoare">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.quicksort_hoare" class="md-nav__link">
+    quicksort_hoare()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.partition_hoare" class="md-nav__link">
+    partition_hoare()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lomuto" class="md-nav__link">
+    Lomuto
+  </a>
+  
+    <nav class="md-nav" aria-label="Lomuto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.quicksort_lomuto" class="md-nav__link">
+    quicksort_lomuto()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.partition_lomuto" class="md-nav__link">
+    partition_lomuto()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hoare" class="md-nav__link">
+    Hoare
+  </a>
+  
+    <nav class="md-nav" aria-label="Hoare">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.quicksort_hoare" class="md-nav__link">
+    quicksort_hoare()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolbox.algorithms.sorting.partition_hoare" class="md-nav__link">
+    partition_hoare()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/inegm/toolbox/edit/master/docs/sorting/quicksort.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="quicksort">Quicksort</h1>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comparison</strong></td>
+<td>Can sort items of any type for which there is total ordering.</td>
+</tr>
+<tr>
+<td><strong>Inplace</strong></td>
+<td>Does not need memory resources for a second array of equal size.</td>
+</tr>
+<tr>
+<td><strong>Stable</strong></td>
+<td>Relative order of equal items is maintained.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lomuto">Lomuto</h2>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="toolbox.algorithms.sorting.quicksort_lomuto" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">quicksort_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Sorts the array <span class="arithmatex">\(a\)</span> from <span class="arithmatex">\(lo\)</span> to <span class="arithmatex">\(hi\)</span> in place using Lomuto partitioning.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comparison</strong></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Inplace</strong></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Stable</strong></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><span class="arithmatex">\(O(n^{2})\)</span> worst-case when A is already in sorted order.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>a</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The array</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>lo</code></td>
+        <td><code>int</code></td>
+        <td><p>The starting index of the section to be partitionned</p></td>
+        <td><code>0</code></td>
+      </tr>
+      <tr>
+        <td><code>hi</code></td>
+        <td><code>Optional[int]</code></td>
+        <td><p>The ending index of the section to be partitionned</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>      <p>This partitioning scheme (see <a href="#toolbox.algorithms.sorting.partition_lomuto">partition_lomuto</a>) always selects the last
+element in the array as a pivot. It then runs through the array with two
+cursors <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>. <span class="arithmatex">\(i\)</span> is initialized to <span class="arithmatex">\(lo\)</span>. <span class="arithmatex">\(j\)</span> runs through the array
+from <span class="arithmatex">\(lo\)</span> to <span class="arithmatex">\(hi\)</span>. When a value at index <span class="arithmatex">\(j\)</span> is found to be smaller than the
+pivot, it is swapped with the value at index <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(i\)</span> is incremented by
+one. Finally, the pivot is swapped with the value at index <span class="arithmatex">\(i\)</span>. Once these
+operations have run their course, it is certain that all values to the left
+of the pivot (which is now at index <span class="arithmatex">\(i\)</span>) are smaller than the pivot and that
+all values to the left are larger than the pivot. The index <span class="arithmatex">\(i\)</span> serves as the
+partitioning (split) point for the next iteration of the sorting
+algorithm, at which point the array is split into the left and right parts
+of <span class="arithmatex">\(a\)</span> and each part is partitionned again until the array is sorted.</p>
+
+<p><strong>Examples:</strong></p>
+    
+      <pre><code>    [5, 4, 3, 6, 2, 1, 9, 4, 0]
+    ---------------------------
+1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 4, 3, 6, 2, 1, 9, 4, 5]
+2 - [4, 3, 2, 1, 4, 5, 6, 9]    - [0, 4, 3, 2, 1, 4, 5, 6, 9]
+3 - [3, 2, 1, 4, 4]             - [0, 3, 2, 1, 4, 4, 5, 6, 9]
+4 - [1, 2, 3]                   - [0, 1, 2, 3, 4, 4, 5, 6, 9]
+5 - [2, 3]                      - [0, 1, 2, 3, 4, 4, 5, 6, 9]
+6 - [6, 9]                      - [0, 1, 2, 3, 4, 4, 5, 6, 9]
+    ---------------------------
+    [0, 1, 2, 3, 4, 4, 5, 6, 9]
+</code></pre>
+
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/sorting.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">quicksort_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">hi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Sorts the array $a$ from $lo$ to $hi$ in place using Lomuto partitioning.</span>
+
+<span class="sd">    | | |</span>
+<span class="sd">    | --- | --- |</span>
+<span class="sd">    | **Comparison** | Yes |</span>
+<span class="sd">    | **Inplace** | Yes |</span>
+<span class="sd">    | **Stable** | No |</span>
+
+<span class="sd">    $O(n^{2})$ worst-case when A is already in sorted order.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (array-like): The array</span>
+<span class="sd">        lo (int): The starting index of the section to be partitionned</span>
+<span class="sd">        hi (int): The ending index of the section to be partitionned</span>
+
+<span class="sd">    This partitioning scheme (see [partition_lomuto]</span>
+<span class="sd">    [toolbox.algorithms.sorting.partition_lomuto]) always selects the last</span>
+<span class="sd">    element in the array as a pivot. It then runs through the array with two</span>
+<span class="sd">    cursors $i$ and $j$. $i$ is initialized to $lo$. $j$ runs through the array</span>
+<span class="sd">    from $lo$ to $hi$. When a value at index $j$ is found to be smaller than the</span>
+<span class="sd">    pivot, it is swapped with the value at index $i$ and $i$ is incremented by</span>
+<span class="sd">    one. Finally, the pivot is swapped with the value at index $i$. Once these</span>
+<span class="sd">    operations have run their course, it is certain that all values to the left</span>
+<span class="sd">    of the pivot (which is now at index $i$) are smaller than the pivot and that</span>
+<span class="sd">    all values to the left are larger than the pivot. The index $i$ serves as the</span>
+<span class="sd">    partitioning (split) point for the next iteration of the sorting</span>
+<span class="sd">    algorithm, at which point the array is split into the left and right parts</span>
+<span class="sd">    of $a$ and each part is partitionned again until the array is sorted.</span>
+
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    ```</span>
+<span class="sd">        [5, 4, 3, 6, 2, 1, 9, 4, 0]</span>
+<span class="sd">        ---------------------------</span>
+<span class="sd">    1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 4, 3, 6, 2, 1, 9, 4, 5]</span>
+<span class="sd">    2 - [4, 3, 2, 1, 4, 5, 6, 9]    - [0, 4, 3, 2, 1, 4, 5, 6, 9]</span>
+<span class="sd">    3 - [3, 2, 1, 4, 4]             - [0, 3, 2, 1, 4, 4, 5, 6, 9]</span>
+<span class="sd">    4 - [1, 2, 3]                   - [0, 1, 2, 3, 4, 4, 5, 6, 9]</span>
+<span class="sd">    5 - [2, 3]                      - [0, 1, 2, 3, 4, 4, 5, 6, 9]</span>
+<span class="sd">    6 - [6, 9]                      - [0, 1, 2, 3, 4, 4, 5, 6, 9]</span>
+<span class="sd">        ---------------------------</span>
+<span class="sd">        [0, 1, 2, 3, 4, 4, 5, 6, 9]</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;lo must be non-negative&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hi</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">hi</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;hi must be within the index range&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lo</span> <span class="o">&gt;=</span> <span class="n">hi</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">partition_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span>
+    <span class="n">quicksort_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">quicksort_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="toolbox.algorithms.sorting.partition_lomuto" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">partition_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Lomuto partitioning.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>a</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The list which is being sorted</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>lo</code></td>
+        <td><code>int</code></td>
+        <td><p>The starting index of the section to be partitionned</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>hi</code></td>
+        <td><code>int</code></td>
+        <td><p>The ending index of the section to be partitionned</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>int: The partition index</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/sorting.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">partition_lomuto</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hi</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Lomuto partitioning.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (array-like): The list which is being sorted</span>
+<span class="sd">        lo (int): The starting index of the section to be partitionned</span>
+<span class="sd">        hi (int): The ending index of the section to be partitionned</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The partition index</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pivot</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">hi</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">lo</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">:</span>
+            <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">i</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+<h2 id="hoare">Hoare</h2>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="toolbox.algorithms.sorting.quicksort_hoare" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">quicksort_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Sorts the array <code>a</code> from <code>lo</code> to <code>hi</code> in place using Hoare partitioning.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comparison</strong></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Inplace</strong></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Stable</strong></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><span class="arithmatex">\(O(n^{2})\)</span> worst-case when A is already in sorted order.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>a</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The array</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>lo</code></td>
+        <td><code>int</code></td>
+        <td><p>The starting index of the section to be partitionned</p></td>
+        <td><code>0</code></td>
+      </tr>
+      <tr>
+        <td><code>hi</code></td>
+        <td><code>Optional[int]</code></td>
+        <td><p>The ending index of the section to be partitionned</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    
+      <pre><code>    [5, 4, 3, 6, 2, 1, 9, 4, 0]
+    ---------------------------
+1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 1, 2, 6, 3, 4, 9, 4, 5]
+2 - [0, 1, 2]                   - [0, 1, 2, 6, 3, 4, 9, 4, 5]
+3 - [6, 3, 4, 9, 4, 5]          - [0, 1, 2, 4, 3, 4, 9, 6, 5]
+4 - [4, 3, 4]                   - [0, 1, 2, 3, 4, 4, 9, 6, 5]
+5 - [9, 6, 5]                   - [0, 1, 2, 3, 4, 4, 5, 6, 9]
+    ---------------------------
+    [0, 1, 2, 3, 4, 4, 5, 6, 9]
+</code></pre>
+
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/sorting.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">quicksort_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">hi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Sorts the array `a` from `lo` to `hi` in place using Hoare partitioning.</span>
+
+<span class="sd">    | | |</span>
+<span class="sd">    | --- | --- |</span>
+<span class="sd">    | **Comparison** | Yes |</span>
+<span class="sd">    | **Inplace** | Yes |</span>
+<span class="sd">    | **Stable** | No |</span>
+
+<span class="sd">    $O(n^{2})$ worst-case when A is already in sorted order.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (array-like): The array</span>
+<span class="sd">        lo (int): The starting index of the section to be partitionned</span>
+<span class="sd">        hi (int): The ending index of the section to be partitionned</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    ```</span>
+<span class="sd">        [5, 4, 3, 6, 2, 1, 9, 4, 0]</span>
+<span class="sd">        ---------------------------</span>
+<span class="sd">    1 - [5, 4, 3, 6, 2, 1, 9, 4, 0] - [0, 1, 2, 6, 3, 4, 9, 4, 5]</span>
+<span class="sd">    2 - [0, 1, 2]                   - [0, 1, 2, 6, 3, 4, 9, 4, 5]</span>
+<span class="sd">    3 - [6, 3, 4, 9, 4, 5]          - [0, 1, 2, 4, 3, 4, 9, 6, 5]</span>
+<span class="sd">    4 - [4, 3, 4]                   - [0, 1, 2, 3, 4, 4, 9, 6, 5]</span>
+<span class="sd">    5 - [9, 6, 5]                   - [0, 1, 2, 3, 4, 4, 5, 6, 9]</span>
+<span class="sd">        ---------------------------</span>
+<span class="sd">        [0, 1, 2, 3, 4, 4, 5, 6, 9]</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;lo must be non-negative&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hi</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">hi</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;hi must be within the index range&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">partition_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span>
+    <span class="n">quicksort_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">quicksort_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="toolbox.algorithms.sorting.partition_hoare" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">partition_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Hoare partitioning.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>a</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The list which is being sorted</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>lo</code></td>
+        <td><code>int</code></td>
+        <td><p>The starting index of the section to be partitionned</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>hi</code></td>
+        <td><code>int</code></td>
+        <td><p>The ending index of the section to be partitionned</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>int: The partition index</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>toolbox/algorithms/sorting.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">partition_hoare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">lo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hi</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Hoare partitioning.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (array-like): The list which is being sorted</span>
+<span class="sd">        lo (int): The starting index of the section to be partitionned</span>
+<span class="sd">        hi (int): The ending index of the section to be partitionned</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The partition index</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pivot</span> <span class="o">=</span> <span class="n">a</span><span class="p">[(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pivot</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivot</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">j</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../optimization/particle-swarm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Particle-swarm" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Particle-swarm
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "navigation.instant", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.76f349be.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

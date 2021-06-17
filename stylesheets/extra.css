@@ -1,0 +1,40 @@
+.md-main {
+  background-color: #e8e8e8;
+}
+
+.md-nav__item .md-nav__link--active {
+  color: black;
+  font-weight: bold;
+}
+
+.md-nav a:hover {
+  color: var(--md-code-hl-number-color);
+}
+
+.md-nav__link:hover {
+  color: var(--md-code-hl-number-color);
+}
+
+.doc-object {
+  padding-bottom: 1em;
+}
+
+.doc-object > .doc-heading {
+  padding-bottom: 0.5em;
+}
+
+.doc-object > .doc-heading > .highlight > .n:first-child {
+  font-weight: bold;
+}
+
+.doc-object a {
+  color: black;
+  text-decoration: none;
+  padding: 0em 0.15em;
+  border-bottom: 2px solid black;
+}
+
+.doc-object a:hover {
+  color: var(--md-code-hl-number-color);
+  border-bottom-width: 3px;
+}
