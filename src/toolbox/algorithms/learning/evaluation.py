@@ -153,7 +153,7 @@ def generate_confusion_matrix(
     headers.
 
     The matrix is used to calculate the classification outcomes. See
-    [get_classification_outcomes()]
+    [get_classification_outcomes]
     [toolbox.algorithms.learning.evaluation.get_classification_outcomes]
 
     Args:
@@ -231,9 +231,9 @@ def evaluate_classifier_per_class(
     actual_col: str,
 ) -> pd.DataFrame:
     """
-    Evaluates all (see [evaluate_all()]
+    Evaluates all (see [evaluate_all]
     [toolbox.algorithms.learning.evaluation.evaluate_all]) statistical measures,
-    the classification outcomes (see [get_classification_outcomes()]
+    the classification outcomes (see [get_classification_outcomes]
     [toolbox.algorithms.learning.evaluation.get_classification_outcomes]), and
     the relative weights for each class label.
 
@@ -283,7 +283,7 @@ def evaluate_classifier_per_class(
 
 def evaluate_classifier_model(class_eval_df: pd.DataFrame) -> pd.Series:
     """
-    Evaluates all (see [evaluate_all()]
+    Evaluates all (see [evaluate_all]
     [toolbox.algorithms.learning.evaluation.evaluate_all]) statistical measures,
     both *mean* across and *weighted* by class.
 
@@ -344,11 +344,11 @@ def evaluate_classifier(
 
     This function wraps:
 
-    - [evaluate_classifier_model()]
+    - [evaluate_classifier_model]
     [toolbox.algorithms.learning.evaluation.evaluate_classifier_model]
-    - [evaluate_classifier_per_class()]
+    - [evaluate_classifier_per_class]
     [toolbox.algorithms.learning.evaluation.evaluate_classifier_per_class]
-    - [generate_confusion_matrix()]
+    - [generate_confusion_matrix]
     [toolbox.algorithms.learning.evaluation.generate_confusion_matrix]
 
     Args:

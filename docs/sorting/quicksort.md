@@ -1,4 +1,4 @@
-# Sorting
+# Quicksort
 
 | | |
 | --- | --- |
@@ -6,22 +6,22 @@
 | **Inplace** | Does not need memory resources for a second array of equal size. |
 | **Stable** | Relative order of equal items is maintained. |
 
-## Lomuto quicksort
-
-### `sorting.quicksort_lomuto`
+## Lomuto
 
 ::: toolbox.algorithms.sorting.quicksort_lomuto
-
-### `sorting.partition_lomuto`
+    rendering:
+      heading_level: 3
 
 ::: toolbox.algorithms.sorting.partition_lomuto
+    rendering:
+      heading_level: 3
 
-## Hoare quicksort
-
-### `sorting.quicksort_hoare`
+## Hoare
 
 ::: toolbox.algorithms.sorting.quicksort_hoare
-
-### `sorting.partition_hoare`
+    rendering:
+      heading_level: 3
 
 ::: toolbox.algorithms.sorting.partition_hoare
+    rendering:
+      heading_level: 3

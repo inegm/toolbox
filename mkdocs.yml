@@ -6,10 +6,12 @@ site_url: https://example.com/
 nav:
   - About: index.md
   - Machine-learning:
-    - Decision-trees: decision-trees.md
-    - Evaluation: evaluation.md
-  - Optimization: optimization.md
-  - Sorting: sorting.md
+    - Decision-trees: machine-learning/decision-trees.md
+    - Evaluation: machine-learning/evaluation.md
+  - Optimization:
+    - Particle-swarm: optimization/particle-swarm.md
+  - Sorting: 
+    - quicksort: sorting/quicksort.md
 plugins:
   - search
   - mkdocstrings:
@@ -35,7 +37,10 @@ markdown_extensions:
 theme:
   features:
     - search.suggest
+    - navigation.instant
+    - navigation.expand
   name: material
+  logo: assets/logo_white.png
   palette:
     scheme: default
     primary: black

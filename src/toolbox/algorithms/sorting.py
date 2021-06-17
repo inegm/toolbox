@@ -8,33 +8,35 @@ def swap(a, i: int, j: int) -> None:
 
 
 def quicksort_lomuto(a, lo: int = 0, hi: Optional[int] = None) -> None:
-    """Sorts the array `a` from `lo` to `hi` in place using Lomuto partitioning.
-
-    Args:
-        a (array-like): The array
-        lo (int): The starting index of the section to be partitionned
-        hi (int): The ending index of the section to be partitionned
-
-    This partitioning scheme always selects the last element in the array as a
-    pivot. It then runs through the array with two cursors `i` and `j`. `i` is
-    initialized to `lo`. `j` runs through the array from `lo` to `hi`. When a
-    value at index `j` is found to be smaller than the pivot, it is swapped with
-    the value at index `i` and `i` is incremented by one. Finally, the pivot is
-    swapped with the value at index `i`. Once these operations have run their
-    course, it is certain that all values to the left of the pivot (which is
-    now at index `i`) are smaller than the pivot and that all values to the
-    left are larger than the pivot. The index `i` serves as the
-    partitioning (split) point for the next iteration of the sorting
-    algorithm, at which point the array is split into the left and right parts
-    of `a` and each part is partitionned again until the array is sorted.
-
-    $O(n^{2})$ worst-case when A is already in sorted order.
+    """Sorts the array $a$ from $lo$ to $hi$ in place using Lomuto partitioning.
 
     | | |
     | --- | --- |
     | **Comparison** | Yes |
     | **Inplace** | Yes |
     | **Stable** | No |
+
+    $O(n^{2})$ worst-case when A is already in sorted order.
+
+    Args:
+        a (array-like): The array
+        lo (int): The starting index of the section to be partitionned
+        hi (int): The ending index of the section to be partitionned
+
+    This partitioning scheme (see [partition_lomuto]
+    [toolbox.algorithms.sorting.partition_lomuto]) always selects the last
+    element in the array as a pivot. It then runs through the array with two
+    cursors $i$ and $j$. $i$ is initialized to $lo$. $j$ runs through the array
+    from $lo$ to $hi$. When a value at index $j$ is found to be smaller than the
+    pivot, it is swapped with the value at index $i$ and $i$ is incremented by
+    one. Finally, the pivot is swapped with the value at index $i$. Once these
+    operations have run their course, it is certain that all values to the left
+    of the pivot (which is now at index $i$) are smaller than the pivot and that
+    all values to the left are larger than the pivot. The index $i$ serves as the
+    partitioning (split) point for the next iteration of the sorting
+    algorithm, at which point the array is split into the left and right parts
+    of $a$ and each part is partitionned again until the array is sorted.
+
 
     Examples:
 
@@ -89,18 +91,18 @@ def partition_lomuto(a, lo: int, hi: int) -> int:
 def quicksort_hoare(a, lo: int = 0, hi: Optional[int] = None) -> None:
     """Sorts the array `a` from `lo` to `hi` in place using Hoare partitioning.
 
-    Args:
-        a (array-like): The array
-        lo (int): The starting index of the section to be partitionned
-        hi (int): The ending index of the section to be partitionned
-
-    $O(n^{2})$ worst-case when A is already in sorted order.
-
     | | |
     | --- | --- |
     | **Comparison** | Yes |
     | **Inplace** | Yes |
     | **Stable** | No |
+
+    $O(n^{2})$ worst-case when A is already in sorted order.
+
+    Args:
+        a (array-like): The array
+        lo (int): The starting index of the section to be partitionned
+        hi (int): The ending index of the section to be partitionned
 
     Examples:
 

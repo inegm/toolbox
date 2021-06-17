@@ -94,7 +94,7 @@ class DecisionTreeClassifier:
     right child. The candidate information gain is then evaluated. This process
     is repeated for each feature and for each unique feature value. The actual
     split is chosen to be the candidate with the highest information gain. For
-    more on information gain, see the [information_gain()]
+    more on information gain, see the [information_gain]
     [toolbox.algorithms.learning.decisiontree.DecisionTreeClassifier.information_gain]
     method's documentation. The leaves of the tree contain subsets of the dataset
     with no impurity, that is to say all examples of the subset belong to a
@@ -166,7 +166,7 @@ class DecisionTreeClassifier:
             0       44  10
             1       21  27
 
-    **For the record**
+    **A comparison**
 
     The accuracy score for the given example is of 0.70, which is not far from
     scikit-learn's DecisionTreeClassifier accuracy of 0.76 given the same dataset.
@@ -290,7 +290,7 @@ class DecisionTreeClassifier:
         """Evaluate the performance of the decision-tree model.
 
         See
-        [evaluation.evaluate_classifier()]
+        [evaluation.evaluate_classifier]
         [toolbox.algorithms.learning.evaluation.evaluate_classifier].
 
         Args:
