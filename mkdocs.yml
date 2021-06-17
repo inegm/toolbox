@@ -1,0 +1,56 @@
+---
+repo_name: inegm/toolbox
+repo_url: https://github.com/inegm/toolbox
+site_name: Toolbox
+site_url: https://example.com/
+nav:
+  - About: index.md
+  - Machine-learning:
+    - Decision-trees: machine-learning/decision-trees.md
+    - Evaluation: machine-learning/evaluation.md
+  - Optimization:
+    - Particle-swarm: optimization/particle-swarm.md
+  - Sorting: 
+    - quicksort: sorting/quicksort.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            docstring_style: 'google'
+          rendering:
+            show_root_heading: True
+            show_root_toc_entry: False
+            show_root_full_path: False
+            show_object_full_path: False
+            show_root_members_full_path: False
+            show_category_heading: False
+            show_if_no_docstring: True
+            show_signature_annotations: False
+            show_source: True
+            group_by_category: True
+            heading_level: 2
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+theme:
+  features:
+    - search.suggest
+    - navigation.instant
+    - navigation.expand
+  name: material
+  logo: assets/logo_white.png
+  palette:
+    scheme: default
+    primary: black
+    accent: indigo
+    toggle:
+      icon: material/weather-sunny
+      name: Switch to dark mode
+extra_css:
+  - stylesheets/extra.css
+extra_javascript:
+  - javascripts/config.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
