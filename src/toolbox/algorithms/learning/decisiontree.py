@@ -72,31 +72,158 @@ class DTCNode:
 
 
 class DecisionTreeClassifier:
+    """
+    **Caveat**
+
+    This is a simple, pedagogical implementation of a decision-tree classifier.
+    It is not likely to win you any Kaggle competitions on its own. It
+    typically achieves accuracy scores around 0.7 and is slow to train.
+    That said, this is what RandomForest, Ensemble methods, and XGBoost are
+    based on, so it's well worth understanding how it works.
+
+    **Fitting the tree**
+
+    These classifiers work by recursively splitting a dataset using **queries**
+    on the features in such a way as to maximize **information gain** at each new
+    split. Information gain is calculated for each split by using an **impurity
+    function**, which is sometimes known as an *error function*. Queries can be
+    as complex as the implementer cares to make them, but in this implementation
+    they are simple : all queries here are of the form $v \ge w$. A value $w$ is
+    selected from the features and a candidate split is created : all examples
+    for which the query yields True go to the left child and all others go to the
+    right child. The candidate information gain is then evaluated. This process
+    is repeated for each feature and for each unique feature value. The actual
+    split is chosen to be the candidate with the highest information gain. For
+    more on information gain, see the [information_gain()]
+    [toolbox.algorithms.learning.decisiontree.DecisionTreeClassifier.information_gain]
+    method's documentation. The leaves of the tree contain subsets of the dataset
+    with no impurity, that is to say all examples of the subset belong to a
+    single class.
+
+    **Making predictions**
+
+    By traveling through the tree with a novel, unlabeled example, applying the
+    queries to its features' values to determine the path, we end up at a leaf
+    node which determines the predicted class label for the novel example.
+
+    Examples:
+
+        >>> import pandas as pd
+        >>> url = "/".join([
+            "https://archive.ics.uci.edu",
+            "ml/machine-learning-databases",
+            "heart-disease/processed.cleveland.data"])
+        >>> df = pd.read_csv(
+                url,
+                header=None,
+                names=[
+                    "age", "sex", "cp", "trestbps", "chol", "fbs", "restecg",
+                    "thalach", "exang", "oldpeak", "slope", "ca", "thal", "target"
+                ]
+            )
+        >>> df['target'].replace({2: 1, 3: 1, 4:1}, inplace=True)
+        >>> train = df[:201]
+        >>> test = df[201:]
+        >>> dtc = DecisionTreeClassifier(train, 'target', gini_impurity)
+        >>> dtc.fit()  # 2 minute coffee break
+        >>> _ = dtc.evaluate(test)
+
+            MODEL
+
+            Precision           mean        0.688657
+                                weighted    0.696078
+            Precision negative  mean        0.688657
+                                weighted    0.681236
+            Sensitivity         mean        0.703326
+                                weighted    0.701773
+            Specificity         mean        0.703326
+                                weighted    0.704880
+            Accuracy            mean        0.696078
+                                weighted    0.696078
+            F1-score            mean        0.687395
+                                weighted    0.690460
+            dtype: float64
+
+            CLASSES
+
+                                        0          1
+            True Positives      44.000000  27.000000
+            True Negatives      27.000000  44.000000
+            False Positives     10.000000  21.000000
+            False Negatives     21.000000  10.000000
+            Precision            0.814815   0.562500
+            Precision negative   0.562500   0.814815
+            Sensitivity          0.676923   0.729730
+            Specificity          0.729730   0.676923
+            Accuracy             0.696078   0.696078
+            F1-score             0.739496   0.635294
+            Weight (actual)      0.529412   0.470588
+
+            CONFUSION MATRIX
+
+                    0   1
+            actual
+            0       44  10
+            1       21  27
+
+    **For the record**
+
+    The accuracy score for the given example is of 0.70, which is not far from
+    scikit-learn's DecisionTreeClassifier accuracy of 0.76 given the same dataset.
+    That said, with hyperparameter tuning (not possible here), the scikit-learn
+    implementation can reach much higher accuracy scores (above 0.85).
+    """
+
     def __init__(
         self,
-        features: pd.DataFrame,
-        labels: pd.Series,
+        dataset: pd.DataFrame,
+        labels_col: str,
         impurity_func: Callable,
     ):
-        self.features = features
-        self.labels = labels
+        """
+        Args:
+            dataset: Including one or more feature columns and a single labels
+                column.
+            labels_col: The name of the labels column.
+            impurity_func: Options include [gini_impurity]
+                [toolbox.algorithms.learning.decisiontree.gini_impurity] and
+                [entropy][toolbox.algorithms.learning.decisiontree.entropy],
+                but any callable with the same signature which returns a float
+                will do.
+        """
+        self.features = dataset.drop(labels_col, axis=1)
+        self.labels = dataset[labels_col]
         self.impurity_func = impurity_func
         self._tree = None
 
     @property
     def tree(self):
-        """The decision-tree's root node."""
+        """Pointer to the decision-tree's root node.
+
+        The (binary) tree can be traversed by traveling through each node's
+        left (True) and right (False) child nodes.
+        """
         return self._tree
 
     def information_gain(self, idx: Any, true_idx: Any) -> float:
         """Gain in information resulting from a split of the parent node.
 
+        Weighted impurity is calculated for each side of the split, using the
+        impurity function set at the initialization of the model, and the total
+        impurity of the split is determined by the sum of these. The information
+        gain is the difference of the impurity of the parent and this sum :
+
+        $gain = I_{p} - w_{l}I_{l} + w_{r}I_{r}$
+
+        The weights are calculated as the fraction of unique labels present in
+        the split relative to the model's set of all known labels.
+
         Args:
             idx (pd.array): The (pandas array) index of the examples of the node
                 before the split.
             true_idx (pd.array): The (pandas array) index of the node's examples
-                for which the query condition is true. ie.: The left child after
-                the split.
+                for which the query condition is true. ie.: The left child's
+                index after the split.
         """
 
         def _calc_impurity(
@@ -120,7 +247,7 @@ class DecisionTreeClassifier:
             idx (pd.array): The (pandas array) index of the examples of the node
                 before the split.
         """
-        max_gain = 0
+        max_gain = 0.0
         query = None
         true_idx = None
         false_idx = None
@@ -160,7 +287,7 @@ class DecisionTreeClassifier:
         data: pd.DataFrame,
         verbose=True,
     ) -> Tuple[pd.Series, pd.DataFrame, pd.DataFrame]:
-        """Evaluate the decision-tree model.
+        """Evaluate the performance of the decision-tree model.
 
         See
         [evaluation.evaluate_classifier()]
